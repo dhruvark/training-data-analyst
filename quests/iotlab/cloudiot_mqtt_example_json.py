@@ -115,7 +115,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=100,
+            default=10,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
@@ -191,8 +191,12 @@ def main():
     # Publish num_messages mesages to the MQTT bridge once per second.
     for i in range(1, args.num_messages + 1):
 
+        simulated_humidity = random.uniform(20, 30)
+        simulated_pressure = random.uniform(45, 50)
+        simulated_dewpoint = random.uniform(60, 70)
+
         simulated_temp = simulated_temp + temperature_trend * random.normalvariate(0.01,0.005)
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp}
+        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint }
         print('Publishing message {} of {}: \'{}\''.format(
                 i, args.num_messages, payload))
         jsonpayload =  json.dumps(payload,indent=4)
@@ -202,7 +206,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(60 if args.message_type == 'event' else 5)
+        time.sleep(5 if args.message_type == 'event' else 5)
 
     # End the network loop and finish.
     client.loop_stop()
