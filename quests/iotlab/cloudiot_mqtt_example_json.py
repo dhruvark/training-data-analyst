@@ -115,7 +115,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=10,
+            default=200,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
