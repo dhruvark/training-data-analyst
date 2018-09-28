@@ -235,26 +235,22 @@ def main():
         args.private_key_file, args.algorithm, args.ca_certs,
         args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
+
+    random.seed(args.device_id)  # A given device ID will always generate
+                                 # the same random data
+
+    simulated_temp = 10 + random.random() * 20
+
+    if random.random() > 0.5:
+        temperature_trend = +1     # temps will slowly rise
+    else:
+        temperature_trend = -1     # temps will slowly fall
+
+        
     # Publish num_messages mesages to the MQTT bridge once per second.
     for i in range(1, args.num_messages + 1):
         # Process network events.
         client.loop()
-
-        ####### Metric Simulation###########################################
-        random.seed(args.device_id)  # A given device ID will always generate
-                                 # the same random data
-
-        simulated_temp = 10 + random.random() * 20
-
-        if random.random() > 0.5:
-            temperature_trend = +1     # temps will slowly rise
-        else:
-            temperature_trend = -1     # temps will slowly fall
-
-
-        simulated_humidity = random.uniform(20, 30)
-        simulated_pressure = random.uniform(45, 50)
-        simulated_dewpoint = random.uniform(60, 70)
 
         # Wait if backoff is required.
         if should_backoff:
@@ -269,6 +265,13 @@ def main():
             time.sleep(delay)
             minimum_backoff_time *= 2
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
+
+        ####### Metric Simulation###########################################
+
+        simulated_temp = simulated_temp + temperature_trend * random.normalvariate(0.01,0.005)
+        simulated_humidity = random.uniform(20, 30)
+        simulated_pressure = random.uniform(45, 50)
+        simulated_dewpoint = random.uniform(60, 70)
 
         ####### Payload Publish ###########################################
         payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint}
