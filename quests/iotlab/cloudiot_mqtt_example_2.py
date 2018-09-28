@@ -206,7 +206,6 @@ def parse_command_line_args():
             help='MQTT bridge hostname.')
     parser.add_argument(
             '--mqtt_bridge_port',
-            choices=(8883, 443),
             default=8883,
             type=int,
             help='MQTT bridge port.')
