@@ -131,7 +131,6 @@ def get_client(
                                cloud_region,
                                registry_id,
                                device_id)))
-    print(client)
     # With Google Cloud IoT Core, the username field is ignored, and the
     # password field is used to transmit a JWT to authorize the device.
     client.username_pw_set(
@@ -241,21 +240,6 @@ def main():
         # Process network events.
         client.loop()
 
-        # Wait if backoff is required.
-        if should_backoff:
-            # If backoff time is too large, give up.
-            if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
-                print('Exceeded maximum backoff time. Giving up.')
-                break
-
-            # Otherwise, wait and connect again.
-            delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
-            print('Waiting for {} before reconnecting.'.format(delay))
-            time.sleep(delay)
-            minimum_backoff_time *= 2
-            client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
-
-
         ####### Metric Simulation###########################################
         random.seed(args.device_id)  # A given device ID will always generate
                                  # the same random data
@@ -271,6 +255,20 @@ def main():
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
+
+        # Wait if backoff is required.
+        if should_backoff:
+            # If backoff time is too large, give up.
+            if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
+                print('Exceeded maximum backoff time. Giving up.')
+                break
+
+            # Otherwise, wait and connect again.
+            delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
+            print('Waiting for {} before reconnecting.'.format(delay))
+            time.sleep(delay)
+            minimum_backoff_time *= 2
+            client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Payload Publish ###########################################
         payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint}
