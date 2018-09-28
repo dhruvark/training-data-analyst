@@ -192,7 +192,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=100,
+            default=300,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
@@ -212,7 +212,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=20,
+            default=5,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
