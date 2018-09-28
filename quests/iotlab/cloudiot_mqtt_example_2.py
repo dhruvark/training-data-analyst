@@ -134,13 +134,13 @@ def get_client(
 
     # With Google Cloud IoT Core, the username field is ignored, and the
     # password field is used to transmit a JWT to authorize the device.
-      client.username_pw_set(
-              username='unused',
-              password=create_jwt(
-                      project_id, private_key_file, algorithm))
+    client.username_pw_set(
+        username='unused',
+        password=create_jwt(
+            project_id, private_key_file, algorithm))
 
     # Enable SSL/TLS support.
-     client.tls_set(ca_certs=ca_certs, tls_version=ssl.PROTOCOL_TLSv1_2)
+    client.tls_set(ca_certs=ca_certs, tls_version=ssl.PROTOCOL_TLSv1_2)
 
     # Register message callbacks. https://eclipse.org/paho/clients/python/docs/
     # describes additional callbacks that Paho supports. In this example, the
