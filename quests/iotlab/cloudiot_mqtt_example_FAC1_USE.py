@@ -272,9 +272,11 @@ def main():
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
+        Longitude = 40.741328
+        Latitude = -74.0032471
 
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint, "Longitude": 40.741328, "Latitude": -74.0032471}
+        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint, "Longitude": Longitude, "Latitude": Latitude}
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
