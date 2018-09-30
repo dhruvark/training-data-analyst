@@ -275,7 +275,7 @@ def main():
         latitude = -74.0032471
 
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint, "longitude": longitude, "latitude": latitude}
+        payload = ["timestamp": int(time.time()), "device": args.device_id, "temperature": simulated_temp, "humidity": simulated_humidity, "pressure": simulated_pressure, "dewpoint": simulated_dewpoint, "longitude": longitude, "latitude": latitude]
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
