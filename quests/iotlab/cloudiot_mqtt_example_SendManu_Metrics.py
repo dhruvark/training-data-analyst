@@ -263,7 +263,7 @@ def main():
 
         workperhour = random.uniform(98, 100)
         totalcount = random.randint(97, 99)
-		p1_qcpassed = random.randint(94, 97)
+	p1_qcpassed = random.randint(94, 97)
         p1_defective = totalcount - p1_qcpassed
 		
         ####### Payload Publish ###########################################
