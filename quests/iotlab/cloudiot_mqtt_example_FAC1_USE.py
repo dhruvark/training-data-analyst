@@ -18,7 +18,7 @@ This example connects to Google Cloud IoT Core via MQTT, using a JWT for device
 authentication. After connecting, by default the device publishes 100 messages
 to the device's MQTT topic at a rate of one per second, and then exits.
 Before you run the sample, you must follow the instructions in the README
-for this sample. change test
+for this sample.
 """
 
 # [START iot_mqtt_includes]
@@ -267,7 +267,7 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = random.normalvariate(64, 72)
+        simulated_temp = random.uniform(70, 72)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
