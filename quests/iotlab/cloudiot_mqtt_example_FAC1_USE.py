@@ -239,12 +239,12 @@ def main():
     random.seed(args.device_id)  # A given device ID will always generate
                                  # the same random data
 
-    simulated_temp = 10 + random.random() * 20
+    #simulated_temp = 10 + random.random() * 20
 
-    if random.random() > 0.5:
-        temperature_trend = +1     # temps will slowly rise
-    else:
-        temperature_trend = -1     # temps will slowly fall
+    #if random.random() > 0.5:
+    #    temperature_trend = +1     # temps will slowly rise
+    #else:
+    #    temperature_trend = -1     # temps will slowly fall
 
         
     # Publish num_messages mesages to the MQTT bridge once per second.
@@ -267,7 +267,7 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = simulated_temp + temperature_trend * random.normalvariate(0.01,0.005)
+        simulated_temp = random.normalvariate(64, 72)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
