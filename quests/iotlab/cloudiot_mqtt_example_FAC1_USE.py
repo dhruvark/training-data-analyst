@@ -248,14 +248,7 @@ def main():
     random.seed(args.device_id)  # A given device ID will always generate
                                  # the same random data
 
-    #simulated_temp = 10 + random.random() * 20
-
-    #if random.random() > 0.5:
-    #    temperature_trend = +1     # temps will slowly rise
-    #else:
-    #    temperature_trend = -1     # temps will slowly fall
-
-        
+       
     # Publish num_messages mesages to the MQTT bridge once per second.
     for i in range(1, args.num_messages + 1):
         # Process network events.
