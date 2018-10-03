@@ -85,6 +85,20 @@ def error_str(rc):
     """Convert a Paho error to a human readable string."""
     return '{}: {}'.format(rc, mqtt.error_string(rc))
 
+def __init__(self):
+    self.mintemp = 0
+    self.maxtemp = 0
+    self.increase = False
+
+def update_sensor_data(self):
+        """Pretend to read the device's sensor data.
+        If the fan is on, assume the temperature decreased one degree,
+        otherwise assume that it increased one degree.
+        """
+    if self.increase:
+            self.mintemp = 70
+        else:
+            self.maxtemp = 72
 
 def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
