@@ -86,8 +86,8 @@ def error_str(rc):
     return '{}: {}'.format(rc, mqtt.error_string(rc))
 
 def __init__(self):
-    self.mintemp = 0
-    self.maxtemp = 0
+    self.mintemp = 70
+    self.maxtemp = 72
     self.increase = False
 
 def update_sensor_data(self):
@@ -280,7 +280,7 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = 73
+        simulated_temp = random.uniform(self.mintemp, self.maxtemp)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
