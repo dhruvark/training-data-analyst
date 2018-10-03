@@ -91,14 +91,13 @@ def __init__(self):
     self.increase = False
 
 def update_sensor_data(self):
-        """Pretend to read the device's sensor data.
-        If the fan is on, assume the temperature decreased one degree,
-        otherwise assume that it increased one degree.
-        """
+    """Pretend to read the device's sensor data.If the fan is on, assume the temperature decreased one degree, otherwise assume that it increased one degree."""
     if self.increase:
         self.mintemp = 70
     else:
         self.maxtemp = 72
+
+
 
 def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
