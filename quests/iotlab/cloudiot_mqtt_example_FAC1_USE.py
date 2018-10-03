@@ -97,8 +97,6 @@ def update_sensor_data(self):
     else:
         self.maxtemp = 72
 
-
-
 def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
     print('on_connect', mqtt.connack_string(rc))
@@ -280,7 +278,7 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = random.uniform(self.mintemp, self.maxtemp)
+        simulated_temp = random.uniform(70, 72)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
