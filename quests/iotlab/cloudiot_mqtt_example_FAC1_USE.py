@@ -96,9 +96,9 @@ def update_sensor_data(self):
         otherwise assume that it increased one degree.
         """
     if self.increase:
-            self.mintemp = 70
-        else:
-            self.maxtemp = 72
+        self.mintemp = 70
+    else:
+        self.maxtemp = 72
 
 def on_connect(unused_client, unused_userdata, unused_flags, rc):
     """Callback for when a device connects."""
