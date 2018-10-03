@@ -43,6 +43,8 @@ MAXIMUM_BACKOFF_TIME = 32
 # Whether to wait with exponential backoff before publishing.
 should_backoff = False
 
+# Define minimum temperature to be set
+temp_increase = False
 
 # [START iot_mqtt_jwt]
 def create_jwt(project_id, private_key_file, algorithm):
@@ -84,11 +86,6 @@ def create_jwt(project_id, private_key_file, algorithm):
 def error_str(rc):
     """Convert a Paho error to a human readable string."""
     return '{}: {}'.format(rc, mqtt.error_string(rc))
-
-def __init__(self):
-    self.mintemp = 70
-    self.maxtemp = 72
-    self.increase = False
 
 def update_sensor_data(self):
     """Pretend to read the device's sensor data.If the fan is on, assume the temperature decreased one degree, otherwise assume that it increased one degree."""
@@ -231,6 +228,7 @@ def parse_command_line_args():
 # [START iot_mqtt_run]
 def main():
     global minimum_backoff_time
+    global temp_increase
 
     args = parse_command_line_args()
 
@@ -278,7 +276,7 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = random.uniform(70, 72)
+        simulated_temp = random.uniform(min_temp, 72)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
