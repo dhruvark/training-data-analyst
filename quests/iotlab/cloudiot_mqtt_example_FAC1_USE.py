@@ -43,6 +43,7 @@ MAXIMUM_BACKOFF_TIME = 32
 # Whether to wait with exponential backoff before publishing.
 should_backoff = False
 
+
 # [START iot_mqtt_jwt]
 def create_jwt(project_id, private_key_file, algorithm):
     """Creates a JWT (https://jwt.io) to establish an MQTT connection.
@@ -78,57 +79,44 @@ def create_jwt(project_id, private_key_file, algorithm):
     return jwt.encode(token, private_key, algorithm=algorithm)
 # [END iot_mqtt_jwt]
 
+
 # [START iot_mqtt_config]
 def error_str(rc):
     """Convert a Paho error to a human readable string."""
     return '{}: {}'.format(rc, mqtt.error_string(rc))
 
 
-class Device(object)
+def on_connect(unused_client, unused_userdata, unused_flags, rc):
+    """Callback for when a device connects."""
+    print('on_connect', mqtt.connack_string(rc))
 
-    def __init__(self):
-        self.increase = False
-        self.mintemp = 0
-        self.maxtemp = 0
-
-    def update_sensor_data(self):
-        """Pretend to read the device's sensor data.If the fan is on, assume the temperature decreased one degree, otherwise assume that it increased one degree."""
-        if self.increase:
-            self.mintemp = 70
-        else:
-            self.maxtemp = 72
-
-    def on_connect(self, unused_client, unused_userdata, unused_flags, rc):
-        """Callback for when a device connects."""
-        print('on_connect', mqtt.connack_string(rc))
-
-        # After a successful connect, reset backoff time and stop backing off.
-        global should_backoff
-        global minimum_backoff_time
-        should_backoff = False
-        minimum_backoff_time = 1
+    # After a successful connect, reset backoff time and stop backing off.
+    global should_backoff
+    global minimum_backoff_time
+    should_backoff = False
+    minimum_backoff_time = 1
 
 
-    def on_disconnect(self, unused_client, unused_userdata, rc):
-        """Paho callback for when a device disconnects."""
-        print('on_disconnect', error_str(rc))
+def on_disconnect(unused_client, unused_userdata, rc):
+    """Paho callback for when a device disconnects."""
+    print('on_disconnect', error_str(rc))
 
-        # Since a disconnect occurred, the next loop iteration will wait with
-        # exponential backoff.
-        global should_backoff
-        should_backoff = True
-
-
-    def on_publish(self, unused_client, unused_userdata, unused_mid):
-        """Paho callback when a message is sent to the broker."""
-        print('on_publish')
+    # Since a disconnect occurred, the next loop iteration will wait with
+    # exponential backoff.
+    global should_backoff
+    should_backoff = True
 
 
-    def on_message(self, unused_client, unused_userdata, message):
-        """Callback when the device receives a message on a subscription."""
-        payload = str(message.payload)
-        print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
-                payload, message.topic, str(message.qos)))
+def on_publish(unused_client, unused_userdata, unused_mid):
+    """Paho callback when a message is sent to the broker."""
+    print('on_publish')
+
+
+def on_message(unused_client, unused_userdata, message):
+    """Callback when the device receives a message on a subscription."""
+    payload = str(message.payload)
+    print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
+            payload, message.topic, str(message.qos)))
 
 
 def get_client(
@@ -232,7 +220,6 @@ def parse_command_line_args():
 # [START iot_mqtt_run]
 def main():
     global minimum_backoff_time
-    global temp_increase
 
     args = parse_command_line_args()
 
@@ -252,7 +239,14 @@ def main():
     random.seed(args.device_id)  # A given device ID will always generate
                                  # the same random data
 
-       
+    simulated_temp = 10 + random.random() * 20
+
+    if random.random() > 0.5:
+        temperature_trend = +1     # temps will slowly rise
+    else:
+        temperature_trend = -1     # temps will slowly fall
+
+        
     # Publish num_messages mesages to the MQTT bridge once per second.
     for i in range(1, args.num_messages + 1):
         # Process network events.
@@ -273,15 +267,14 @@ def main():
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
 
         ####### Metric Simulation###########################################
-        simulated_temp = random.uniform(70, 72)
+
+        simulated_temp = simulated_temp + temperature_trend * random.normalvariate(0.01,0.005)
         simulated_humidity = random.uniform(20, 30)
         simulated_pressure = random.uniform(45, 50)
         simulated_dewpoint = random.uniform(60, 70)
-        longitude = 40.741328
-        latitude = -74.0032471
-
+		
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "longitude": longitude, "latitude": latitude}
+        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "Longitude": 37.4219999, "Latitude": -122.0840575}
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
@@ -303,7 +296,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(60 if args.message_type == 'event' else 5)
+        time.sleep(1 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
