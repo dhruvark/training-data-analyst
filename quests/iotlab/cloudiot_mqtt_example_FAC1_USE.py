@@ -112,7 +112,11 @@ def on_publish(unused_client, unused_userdata, unused_mid):
     print('on_publish')
 
 
-
+def on_message(unused_client, unused_userdata, message):
+    """Callback when the device receives a message on a subscription."""
+    payload = str(message.payload)
+    print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
+            payload, message.topic, str(message.qos)))
 
 
 def get_client(
