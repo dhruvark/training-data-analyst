@@ -299,7 +299,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(20 if args.message_type == 'event' else 5)
+        time.sleep(60 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
