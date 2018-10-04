@@ -117,6 +117,9 @@ def on_message(unused_client, unused_userdata, message):
     payload = str(message.payload)
     print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
             payload, message.topic, str(message.qos)))
+    data = json.loads(payload)
+    if data['increase'] != increase:
+        print('recieving right value')
 
 
 def get_client(
