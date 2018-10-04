@@ -79,6 +79,13 @@ def create_jwt(project_id, private_key_file, algorithm):
     return jwt.encode(token, private_key, algorithm=algorithm)
 # [END iot_mqtt_jwt]
 
+class Device(object):
+
+    def __init__(self):
+        self.increase = False
+
+    def update_temp(self):
+        self.temp = 70
 
 # [START iot_mqtt_config]
 def error_str(rc):
