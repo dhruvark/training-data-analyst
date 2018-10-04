@@ -210,7 +210,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=2,
+            default=1,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
@@ -296,7 +296,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(1 if args.message_type == 'event' else 5)
+        time.sleep(20 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
