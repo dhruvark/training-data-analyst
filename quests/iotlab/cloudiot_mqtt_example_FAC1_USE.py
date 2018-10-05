@@ -29,7 +29,6 @@ import random
 import ssl
 import time
 import json
-import yaml
 
 import jwt
 import paho.mqtt.client as mqtt
@@ -118,8 +117,6 @@ def on_message(unused_client, unused_userdata, message):
     payload = str(message.payload)
     print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
             payload, message.topic, str(message.qos)))
-    data2 = yaml.safe_load(payload)
-    print('Message Recieved from temp. trigger -->', data2)
 
 
 def get_client(
@@ -277,7 +274,7 @@ def main():
         simulated_dewpoint = random.uniform(60, 70)
 		
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "Longitude": 9060563, "Latitude": -122.0840575}
+        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "Longitude": 37.4219999, "Latitude": -122.0840575}
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
@@ -299,7 +296,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(20 if args.message_type == 'event' else 5)
+        time.sleep(1 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
