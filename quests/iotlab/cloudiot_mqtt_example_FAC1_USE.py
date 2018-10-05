@@ -29,6 +29,7 @@ import random
 import ssl
 import time
 import json
+import yaml
 
 import jwt
 import paho.mqtt.client as mqtt
