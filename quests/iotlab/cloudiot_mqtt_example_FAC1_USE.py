@@ -79,6 +79,7 @@ def create_jwt(project_id, private_key_file, algorithm):
     return jwt.encode(token, private_key, algorithm=algorithm)
 # [END iot_mqtt_jwt]
 
+
 # [START iot_mqtt_config]
 def error_str(rc):
     """Convert a Paho error to a human readable string."""
@@ -116,9 +117,6 @@ def on_message(unused_client, unused_userdata, message):
     payload = str(message.payload)
     print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
             payload, message.topic, str(message.qos)))
-    data = json.loads(payload)
-    if data['increase']:
-        print('recieving right value')
 
 
 def get_client(
@@ -212,7 +210,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=5,
+            default=2,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
@@ -222,6 +220,7 @@ def parse_command_line_args():
 # [START iot_mqtt_run]
 def main():
     global minimum_backoff_time
+
     args = parse_command_line_args()
 
     # Publish to the events or state topic based on the flag.
@@ -297,7 +296,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(20 if args.message_type == 'event' else 5)
+        time.sleep(1 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
