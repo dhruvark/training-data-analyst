@@ -239,7 +239,7 @@ def main():
     random.seed(args.device_id)  # A given device ID will always generate
                                  # the same random data
 
-    simulated_temp = 10 + random.random() * 20
+    #simulated_temp = 10 + random.random() * 20
 
       
     # Publish num_messages mesages to the MQTT bridge once per second.
