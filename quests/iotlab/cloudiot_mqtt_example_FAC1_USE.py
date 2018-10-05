@@ -277,7 +277,7 @@ def main():
         simulated_dewpoint = random.uniform(60, 70)
 		
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "Longitude": 37.4219999, "Latitude": -122.0840575}
+        payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "Longitude": 9060563, "Latitude": -122.0840575}
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
