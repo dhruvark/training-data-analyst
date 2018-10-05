@@ -117,6 +117,8 @@ def on_message(unused_client, unused_userdata, message):
     payload = str(message.payload)
     print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
             payload, message.topic, str(message.qos)))
+	data2 = yaml.safe_load(payload)
+	print('Message Recieved from temp. trigger -->', data2)
 
 
 def get_client(
