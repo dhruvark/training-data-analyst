@@ -210,7 +210,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=60,
+            default=2,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
