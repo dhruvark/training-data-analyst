@@ -267,7 +267,7 @@ def main():
         p1_defective = totalcount - p1_qcpassed
 		
         ####### Payload Publish ###########################################
-        payload = {"timestamp": int(time.time()), "workperhour": workperhour, "totalcount": totalcount, "p1_qcpassed": p1_qcpassed, "p1_defective": p1_defective}
+        payload = {"timestamp": int(time.time()), "workperhour": round(workperhour,3), "totalcount": totalcount, "p1_qcpassed": p1_qcpassed, "p1_defective": p1_defective}
         jsonpayload = json.dumps(payload,indent=4)
         print('Publishing message {}/{}: \'{}\''.format(
                 i, args.num_messages, payload))
