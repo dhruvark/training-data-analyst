@@ -64,7 +64,7 @@ def create_jwt(project_id, private_key_file, algorithm):
             # The time that the token was issued at
             'iat': datetime.datetime.utcnow(),
             # The time the token expires.
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=2),
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1440),
             # The audience field should always be set to the GCP project id.
             'aud': project_id
     }
@@ -191,7 +191,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=300,
+            default=200,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
