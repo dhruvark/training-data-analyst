@@ -210,7 +210,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=2,
+            default=60,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
@@ -263,7 +263,7 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        simulated_temp = random.uniform(70, 76)
+        simulated_temp = random.uniform(70, 73)
         simulated_humidity = random.uniform(25, 30)
         simulated_pressure = random.uniform(12, 14.7)
         simulated_dewpoint = random.uniform(30, 35)
