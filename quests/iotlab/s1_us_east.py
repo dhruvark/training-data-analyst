@@ -191,7 +191,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=350,
+            default=300,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
@@ -265,7 +265,7 @@ def main():
 
         simulated_temp = random.uniform(70, 73)
         simulated_humidity = random.uniform(25, 30)
-        simulated_pressure = random.uniform(12, 14.7)
+        simulated_pressure = random.uniform(18, 22)
         simulated_dewpoint = random.uniform(30, 35)
 		
         ####### Payload Publish ###########################################
