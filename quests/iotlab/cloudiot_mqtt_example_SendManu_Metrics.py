@@ -261,9 +261,9 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        workperhour = random.uniform(280, 286)
-        totalcount = random.randint(88, 92)
-	p1_qcpassed = random.randint(84, 88)
+        workperhour = random.uniform(288, 299)
+        totalcount = random.randint(94, 98)
+	p1_qcpassed = random.randint(92, 96)
         p1_defective = totalcount - p1_qcpassed
 		
         ####### Payload Publish ###########################################
