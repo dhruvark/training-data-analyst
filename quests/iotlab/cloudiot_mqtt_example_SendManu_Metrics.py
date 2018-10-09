@@ -210,7 +210,7 @@ def parse_command_line_args():
             help='MQTT bridge port.')
     parser.add_argument(
             '--jwt_expires_minutes',
-            default=6,
+            default=60,
             type=int,
             help=('Expiration time, in minutes, for JWT tokens.'))
 
@@ -263,7 +263,7 @@ def main():
 
         workperhour = random.uniform(289, 300)
         totalcount = random.randint(96, 99)
-	p1_qcpassed = random.randint(86, 90)
+	p1_qcpassed = random.randint(92, 96)
         p1_defective = totalcount - p1_qcpassed
 		
         ####### Payload Publish ###########################################
