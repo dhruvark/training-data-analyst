@@ -263,7 +263,7 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        simulated_temp = random.uniform(73, 80)
+        simulated_temp = random.uniform(70, 75)
         simulated_humidity = random.uniform(25, 30)
         simulated_pressure = random.uniform(12, 14.7)
         simulated_dewpoint = random.uniform(30, 35)
