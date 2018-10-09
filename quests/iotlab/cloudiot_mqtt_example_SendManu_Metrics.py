@@ -261,9 +261,9 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        workperhour = random.uniform(282, 290)
-        totalcount = random.randint(86, 93)
-	p1_qcpassed = random.randint(80, 86)
+        workperhour = random.uniform(280, 286)
+        totalcount = random.randint(88, 92)
+	p1_qcpassed = random.randint(84, 88)
         p1_defective = totalcount - p1_qcpassed
 		
         ####### Payload Publish ###########################################
@@ -289,7 +289,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(1200 if args.message_type == 'event' else 5)
+        time.sleep(1800 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
