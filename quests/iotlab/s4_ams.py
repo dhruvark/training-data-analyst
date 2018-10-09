@@ -191,7 +191,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=200,
+            default=140,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
@@ -263,10 +263,10 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        simulated_temp = random.uniform(68, 74)
+        simulated_temp = random.uniform(70, 73)
         simulated_humidity = random.uniform(25, 30)
         simulated_pressure = random.uniform(12, 14.7)
-        simulated_dewpoint = random.uniform(29, 35)
+        simulated_dewpoint = random.uniform(30, 35)
 		
         ####### Payload Publish ###########################################
         payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "metrocode": 1010543}

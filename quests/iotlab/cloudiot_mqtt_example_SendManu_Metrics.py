@@ -261,8 +261,8 @@ def main():
 
         ####### Metric Simulation###########################################
 
-        workperhour = random.uniform(288, 299)
-        totalcount = random.randint(94, 98)
+        workperhour = random.uniform(289, 300)
+        totalcount = random.randint(96, 99)
 	p1_qcpassed = random.randint(92, 96)
         p1_defective = totalcount - p1_qcpassed
 		
