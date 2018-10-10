@@ -191,7 +191,7 @@ def parse_command_line_args():
     parser.add_argument(
             '--num_messages',
             type=int,
-            default=200,
+            default=600,
             help='Number of messages to publish.')
     parser.add_argument(
             '--message_type',
@@ -289,7 +289,7 @@ def main():
         client.publish(mqtt_topic, jsonpayload, qos=1)
 
         # Send events every second. State should not be updated as often
-        time.sleep(1800 if args.message_type == 'event' else 5)
+        time.sleep(60 if args.message_type == 'event' else 5)
 
     print('Finished.')
 # [END iot_mqtt_run]
