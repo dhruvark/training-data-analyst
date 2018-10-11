@@ -266,7 +266,7 @@ def main():
         simulated_temp = random.uniform(70, 73)
         simulated_humidity = random.uniform(25, 30)
         simulated_pressure = random.uniform(12, 14.7)
-        simulated_dewpoint = random.uniform(30, 35)
+        simulated_dewpoint = random.uniform(40, 43)
 		
         ####### Payload Publish ###########################################
         payload = {"timestamp": int(time.time()), "device": args.device_id, "temperature": round(simulated_temp,3), "humidity": round(simulated_humidity,3), "pressure": round(simulated_pressure,3), "dewpoint": round(simulated_dewpoint,3), "metrocode": 9060563}
